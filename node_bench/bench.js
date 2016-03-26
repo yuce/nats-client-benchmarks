@@ -2,8 +2,6 @@
 
 const subject = "0123456789012345"
 const payload = "0123456789012345012345678901234501234567890123450123456789012345"
-const num_pubs = 1
-const num_subs = 1
 const msg_count = 1000000
 
 var pub = require('nats').connect();
