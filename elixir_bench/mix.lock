@@ -1,0 +1,1 @@
+%{"nats": {:git, "https://github.com/nats-io/elixir-nats.git", "3e09a962db4babc0ea78bfd6ab4990bc2275c8a1", []}}
