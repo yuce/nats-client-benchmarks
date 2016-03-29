@@ -24,15 +24,15 @@ prepare_bench(Host, Port, MsgCount, Subject, Payload) ->
      io:format("~p ~p ~p~n", [MsgCount, Time, MsgsPerSec]).
     
 create_conns(Host, Port) ->
-    {ok, Sub} = teacup_nats@sync:connect(Host, Port), 
-    {ok, Pub} = teacup_nats:connect(Host, Port),
+    {ok, Sub} = tcnats:connect(Host, Port, #{verbose => true}), 
+    {ok, Pub} = tcnats:connect(Host, Port),
     loop_conn_ready(Pub),
     {Pub, Sub}.
 
 bench(Pub, Sub, MsgCount, Subject, Payload) ->
     Me = self(),
     F = fun() ->
-        teacup_nats@sync:sub(Sub, Subject),
+        tcnats:sub(Sub, Subject),
         sub_loop(Sub, MsgCount),
         Me ! done
     end,
@@ -53,7 +53,7 @@ publish(_, _, _, 0) ->
     ok;
     
 publish(Pub, Subject, Payload, Left) ->
-    teacup_nats:pub(Pub, Subject, #{payload => Payload}),
+    tcnats:pub(Pub, Subject, #{payload => Payload}),
     publish(Pub, Subject, Payload, Left - 1).
 
 sub_loop(_Sub, 0) ->
