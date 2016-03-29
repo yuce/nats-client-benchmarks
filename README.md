@@ -30,11 +30,11 @@ between performance of clients.
 
 | Client           | Time to complete (microseconds) | Messages per second |
 | ---------------- | ------------------------------: | ------------------: |
-| Go               |                         917_084 |           1_090_411 |
-| Node             |                       3_377_000 |             292_654 |
-| Erlang           |                       8_878_089 |             112_637 |
-| Elixir           |                      19_748_711 |              50_636 |
-| Python (Tornado) |                      59_896_311 |              16_696 |
+| Go               |                         926_572 |           1_079_245 |
+| Node             |                       3_112_000 |             321_337 |
+| Erlang           |                       5_330_898 |             187_586 |
+| Elixir           |                      20_797_629 |              46_613 |
+| Python (Tornado) |                      59_586_310 |              16_782 |
 
 ## Building the Benchmark Code
 
