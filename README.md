@@ -49,23 +49,23 @@ to a client.
 
 Client dependencies:
 
-* [Elixir](https://github.com/nats-io/elixir-nats)
+* Elixir
     * [Erlang 18.x](http://www.erlang.org/downloads). It's pretty straightforward
     to compile Erlang from source, but Erlang Solutions provide precompiled
     packages for many systems [here](https://www.erlang-solutions.com/resources/download.html).
     * [Elixir 1.2.x](http://elixir-lang.org/install.html). It's pretty straightforward
     to compile Elixir from source, but Erlang Solutions provide precompiled
     packages for many systems [here](https://www.erlang-solutions.com/resources/download.html).
-* [Erlang](https://github.com/yuce/teacup_nats)
+* Erlang
     * [Erlang 18.x](http://www.erlang.org/downloads). It's pretty straightforward
     to compile Erlang from source, but Erlang Solutions provide precompiled
     packages for many systems [here](https://www.erlang-solutions.com/resources/download.html).
     * [rebar3 3.x](https://github.com/erlang/rebar3/releases)
-* [Go](https://github.com/nats-io/nats)
+* Go
     * [Go 1.6.x](https://golang.org/dl/)
-* [NodeJS](https://github.com/nats-io/node-nats)
+* NodeJS
     * [NodeJS 5.x](https://nodejs.org/en/download/)
-* [Python (Tornado)](https://github.com/nats-io/python-nats)
+* Python (Tornado)
     * [Python 2.7](https://www.python.org/downloads/). It's probably already
     installed on your system.
     * [virtualenv 1.11+](https://virtualenv.pypa.io/en/latest/index.html). It's probably
