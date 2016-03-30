@@ -1,2 +1,0 @@
-defmodule ElixirBench do
-end

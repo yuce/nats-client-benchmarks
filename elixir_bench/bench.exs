@@ -1,18 +1,22 @@
-defmodule Bench do
-    def go(subject, payload, msg_count) do
-        start_subscribe(self, subject, msg_count)
+defmodule Bench do    
+    @subject "0123456789012345"
+    @payload "0123456789012345012345678901234501234567890123450123456789012345"
+    
+    def go(nats_conf, msg_count) do
+        subject = @subject
+        payload = @payload
+        start_subscribe(self, nats_conf, subject, msg_count)
         :timer.sleep(1000)  # Ensure we are subscribed
-        {usec, :ok} = :timer.tc(fn -> publish_and_receive(subject, payload, msg_count) end)
+        f = fn ->
+            publish_and_receive(nats_conf, subject, payload, msg_count)
+        end
+        {usec, :ok} = :timer.tc(f)
         ops = ops(usec, msg_count)
         {msg_count, usec, ops}
     end
     
-    defp nats_conf do
-        %{host: "127.0.0.1", port: 4222}
-    end
-    
-    defp publish_and_receive(subject, payload, msg_count) do
-        start_publish(subject, payload, msg_count)
+    defp publish_and_receive(nats_conf, subject, payload, msg_count) do
+        start_publish(nats_conf, subject, payload, msg_count)
         receive do
             :done -> :ok
         end
@@ -48,18 +52,36 @@ defmodule Bench do
         publish(conn, subject, payload, left - 1)
     end
     
-    def start_subscribe(parent, subject, msg_count) do
+    def start_subscribe(parent, nats_conf, subject, msg_count) do
         {:ok, sub} = Nats.Client.start_link(nats_conf)
         spawn(fn -> subscribe(parent, sub, subject, msg_count) end)
     end
     
-    def start_publish(subject, payload, msg_count) do
+    def start_publish(nats_conf, subject, payload, msg_count) do
         {:ok, pub} = Nats.Client.start_link(nats_conf)
         spawn(fn -> publish(pub, subject, payload, msg_count) end)
     end
 end
 
-subject = "0123456789012345"
-payload = "0123456789012345012345678901234501234567890123450123456789012345"
-{msg_count, usec, ops} = Bench.go(subject, payload, 1_000_000)
-IO.puts "#{msg_count} #{usec} #{ops}"
+defmodule ArgvParser do
+    def nats_conf do
+        <<"nats://", host_port :: binary>> = :lists.nth(1, System.argv)
+        [host, bin_port] = :binary.split(host_port, ":")
+        port = :erlang.binary_to_integer(bin_port)
+        %{host: host, port: port}
+    end
+    
+    def message_count do
+        :erlang.binary_to_integer(:lists.nth(2, System.argv))
+    end
+
+end
+
+if length(System.argv) == 2 do
+    {msg_count, usec, ops} = Bench.go(ArgvParser.nats_conf,
+                                      ArgvParser.message_count)
+    IO.puts "#{msg_count} #{usec} #{ops}"
+else
+    IO.puts "Usage: iex bench.exs nats://HOST:PORT message_count"
+end
+

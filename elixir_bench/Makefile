@@ -5,4 +5,7 @@ compile:
 run:
 	./run.sh
 
+clean:
+	rm -rf _build deps mix.lock
+
 phony: compile
