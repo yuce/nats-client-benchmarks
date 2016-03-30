@@ -3,7 +3,7 @@ compile:
 	sh install.sh
 
 run:
-	./run.sh
+	bash ./run.sh
 
 clean:
 	rm -rf ve
