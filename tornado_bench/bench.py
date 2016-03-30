@@ -1,4 +1,5 @@
 
+import sys
 import time
 import tornado.ioloop
 import tornado.gen
@@ -8,7 +9,6 @@ from nats.io.client import Client as NATS
 
 subject = "0123456789012345"
 payload = "0123456789012345012345678901234501234567890123450123456789012345"
-msg_count = 1000000
 
 
 class Client(object):
@@ -33,11 +33,17 @@ class Client(object):
 
 @tornado.gen.coroutine
 def main():
+    if len(sys.argv) != 3:
+        print 'Usage: python bench.py nats://HOST:PORT message_count'
+        sys.exit(1)
+    url = sys.argv[1]
+    msg_count = int(sys.argv[2])
+    
     pub = Client(NATS())
-    yield pub.connect(verbose=False, servers=['nats://127.0.0.1:4222'])
+    yield pub.connect(verbose=False, servers=[url])
     
     sub = Client(NATS())
-    yield sub.connect(verbose=True, servers=['nats://127.0.0.1:4222'])
+    yield sub.connect(verbose=True, servers=[url])
     yield sub.subscribe(subject)
     
     tic = time.time()

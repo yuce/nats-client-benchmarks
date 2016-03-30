@@ -14,6 +14,7 @@ $PYTHON setup.py install
 
 cd ..
 
-echo $PYTHON `pwd`/bench.py > run.sh
+echo 'source ../common/setup-run.sh' > run.sh
+echo $PYTHON `pwd`/bench.py '$nats_url' '$msg_count' >> run.sh
 chmod +x run.sh
 
