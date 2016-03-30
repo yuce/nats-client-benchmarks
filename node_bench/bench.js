@@ -1,11 +1,18 @@
 // Adapted from: https://github.com/nats-io/node-nats/blob/master/benchmark/pub_sub_perf.js
 
+var nats = require('nats'); 
+
+if (process.argv.length != 4) {
+    console.log('Usage: node bench.js nats://HOST:PORT message_count');
+    process.exit(0);
+}
+
+const url = process.argv[2]
 const subject = "0123456789012345"
 const payload = "0123456789012345012345678901234501234567890123450123456789012345"
-const msg_count = 1000000
-
-var pub = require('nats').connect();
-var sub = require('nats').connect();
+const msg_count = parseInt(process.argv[3]);
+var pub = nats.connect({url: url});
+var sub = nats.connect({url: url});
 
 sub.on('connect', () => {
     var received = 0;
