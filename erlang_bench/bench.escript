@@ -4,15 +4,19 @@
 
 -mode(compile).
 
-main([]) ->
-    Host = <<"127.0.0.1">>,
-    Port = 4222,
-    MsgCount = 1000000,
+main([Address, StrMsgCount]) ->
+    <<"nats://", HostPort/binary>> = list_to_binary(Address),
+    [Host, BinPort] = binary:split(HostPort, <<":">>),
+    Port = binary_to_integer(BinPort),
+    MsgCount = list_to_integer(StrMsgCount),
     Subject =  <<"0123456789012345">>,
     Payload = <<"0123456789012345012345678901234501234567890123450123456789012345">>,
     application:start(teacup),
     prepare_bench(Host, Port, MsgCount, Subject, Payload),
-    application:stop(teacup).
+    application:stop(teacup);
+
+ main(_) ->
+     io:format("Usage: escript bench.escript nats://HOST:PORT message_count~n").
    
 prepare_bench(Host, Port, MsgCount, Subject, Payload) ->
     {Pub, Sub} = create_conns(Host, Port),
