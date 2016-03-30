@@ -9,7 +9,7 @@ fi
 
 if [ "$MSG_COUNT" == "" ]
 then
-    msg_count="10000"
+    msg_count="1000000"
 else
     msg_count=$MSG_COUNT
 fi
