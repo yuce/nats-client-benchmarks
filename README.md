@@ -38,8 +38,8 @@ between performance of clients.
 
 ## Building the Benchmark Code
 
-Benchmarks runs fine on Linux, and should run without modifications on OSX.
-Other POSIX systems should be OK with no to little modifications.
+Benchmarks run fine on Linux, and should run without modifications on OSX.
+Other POSIX systems with BASH should be OK with no to little modifications.
 If you successfully run the benchmarks on Windows, I would be happy
 to update the instructions below. 
 
@@ -81,6 +81,15 @@ client. The output has the same format for all clients:
 * Number of messages
 * The time in microseconds to complete
 * Messages per second
+
+You can alter defaults by setting the following environment variables:
+
+* `NATS_URL`: NATS URL to use for the benchmark, in the form of `nats://HOST:PORT`. E.g., `nats://127.0.0.1:4222`
+* `MSG_COUNT`: Number of messages to publish/subscribe.
+
+For example:
+
+    $ NATS_URL=nats://demo.nats.io MSG_COUNT=100 make run
 
 ## Contributing
 
