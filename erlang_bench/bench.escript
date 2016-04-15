@@ -37,10 +37,12 @@ bench(Pub, Sub, MsgCount, Subject, Payload) ->
     Me = self(),
     F = fun() ->
         tcnats:sub(Sub, Subject),
+        Me ! start,
         sub_loop(Sub, MsgCount),
         Me ! done
     end,
     spawn(F),
+    receive start -> ok end,
     spawn(fun() -> publish(Pub, Subject, Payload, MsgCount) end),
     receive 
         done -> ok
