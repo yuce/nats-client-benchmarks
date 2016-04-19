@@ -3,6 +3,9 @@ compile:
 	 MIX_ENV=prod mix compile
 
 run:
-	./run.sh
+	bash ./run.sh
+
+clean:
+	rm -rf _build deps mix.lock
 
 phony: compile

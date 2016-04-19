@@ -3,10 +3,11 @@ compile:
 	sh install.sh
 
 run:
-	./run.sh
+	bash ./run.sh
 
 clean:
 	rm -rf ve
 	rm -rf python-nats
+	rm run.sh
 
 phony: compile

@@ -1,8 +1,11 @@
 
 compile:
-	rebar3 compile
+	rebar3 as prod compile
 
 run:
-	./run.sh
-	
+	bash ./run.sh
+
+clean:
+	rm -rf _build rebar.lock
+
 phony: compile

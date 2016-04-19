@@ -2,6 +2,9 @@ compile:
 	npm install
 
 run:
-	./run.sh
+	bash ./run.sh
+
+clean:
+	rm -rf node_modules
 
 phony: compile

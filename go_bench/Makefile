@@ -3,6 +3,6 @@ compile:
 	go get github.com/nats-io/nats
 
 run:
-	./run.sh
+	bash ./run.sh
 
 phony: compile
